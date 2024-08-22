@@ -2,7 +2,7 @@ package list;
 
 import java.util.*;
 
-public class Main {
+public class ExemploList {
     public static void main(String[] args) {
 
         List<Double> notas = new ArrayList<>();
