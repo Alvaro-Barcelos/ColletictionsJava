@@ -22,7 +22,7 @@ public class ExerciciosPropostos {
             temperaturaMes = input.nextInt();
             temperatura.add(temperaturaMes);
             soma += temperaturaMes; //soma para calcular a media
-            input.nextLine();
+            input.nextLine(); //limpeza do cache
         }
 
         //OUTRA FORMA DE REALIZAR A SOMA
