@@ -1,0 +1,180 @@
+Index: src/map/ExemploMap.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/map/ExemploMap.java b/src/map/ExemploMap.java
+new file mode 100644
+--- /dev/null	(date 1724355069254)
++++ b/src/map/ExemploMap.java	(date 1724355069254)
+@@ -0,0 +1,61 @@
++package map;
++
++import java.util.*;
++
++public class ExemploMap {
++    /*
++ Dada os modelos dos carros e seus respectivos consumos na estrada, faça:
++ modelo = gol - consumo = 14,4km/l
++ modelo = uno - consumo = 15,6 km/l
++ modelo = mobi - consumo = 16,1 km/l
++ modelo = hb20 - consumo = 14,5 km/l
++ modelo = kwid - consumo = 15,6 km/l
++ */
++
++//        Map carrosPopulares2020 = new HashMap(); //antes do java 5
++//        Map<String, Double> carrosPopulares = new HashMap<>(); //Generics(jdk 5) - Diamont Operator(jdk 7)
++//        HashMap<String, Double> carrosPopulares = new HashMap<>();
++//        Map<String, Double> carrosPopulares2020 = Map.of("gol", 14.4, "uno", 15.6, "mobi", 16.1, "hb20", 14.5, "kwid", 15.6)
++
++    public static void main(String[] args) {
++        System.out.println("Crie um dicionário que relacione os modelos e seus respectivos consumos: ");
++        Map<String, Double> carrospopulares = new HashMap<>(){{
++            put("gol",14.4);
++            put("uno",15.4);
++            put("mobi",16.1);
++            put("hb20",14.5);
++            put("kwid",15.6);
++        }};
++        System.out.println(carrospopulares);
++
++        System.out.println("Substitua o consumo do gol por 15,2 km/l: ");
++        carrospopulares.put("gol", 15.2);
++        System.out.println(carrospopulares);
++
++        System.out.println("Confira se o modelo tucson está no dicionário: " + carrospopulares.containsKey("tucson"));
++
++        System.out.println("Exiba o consumo do uno: " + carrospopulares.get("uno"));
++
++        System.out.println("Exiba os modelos: ");
++        Set<String> modelos = carrospopulares.keySet();
++        System.out.println(modelos);
++
++        System.out.println("Exiba o consumo dos carros");
++        Collection<Double> consumos = carrospopulares.values();
++        System.out.println(consumos);
++
++
++        System.out.println("Exiba o modelo mais econômico e seu consumo: ");
++
++        Double consumoMaisEficiente = Collections.max(carrospopulares.values());
++        Set<Map.Entry<String, Double>> entries = carrospopulares.entrySet();
++        String modeloMaisEficiente = "";
++
++        for (Map.Entry<String, Double> entry : entries) {
++            if (entry.getValue().equals(consumoMaisEficiente)) modeloMaisEficiente = entry.getKey();
++        }
++
++        System.out.println("Modelo mais eficiente: " + modeloMaisEficiente  + " - " + consumoMaisEficiente);
++
++    }
++}
+Index: src/map/ExemploOrdenacaoMap.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/map/ExemploOrdenacaoMap.java b/src/map/ExemploOrdenacaoMap.java
+new file mode 100644
+--- /dev/null	(date 1726532087989)
++++ b/src/map/ExemploOrdenacaoMap.java	(date 1726532087989)
+@@ -0,0 +1,98 @@
++package map;
++
++import java.util.*;
++
++public class ExemploOrdenacaoMap {
++
++    public static void main(String[] args) {
++
++        Map<String, List<Livro>> meusLivros = new HashMap<>();
++        //HashMap imprime em ordem aleatoria
++        adicionaLivro("Hawking, Stephen", new Livro("Uma breve Historia do tempo", 256), meusLivros);
++        adicionaLivro("Duhigg, Charles", new Livro("O Poder do Habito", 400), meusLivros);
++        adicionaLivro("Duhigg, Charles", new Livro("O Poder do Habito2", 402), meusLivros);
++        adicionaLivro("Harari, Yuval Noah", new Livro("21 Lições para o seculo 21", 432), meusLivros);
++
++        System.out.println("--- Ordem aleatoria ---");
++        imprimeLivro(meusLivros);
++
++        System.out.println("--- Ordem Inserção ---");
++        //LinkedHashMap imprime em ordem de inserção dos dados
++        Map<String, List<Livro>> meusLivros2 = new LinkedHashMap<>();
++        adicionaLivro("Hawking, Stephen", new Livro("Uma breve Historia do tempo", 256), meusLivros2);
++        adicionaLivro("Duhigg, Charles", new Livro("O Poder do Habito", 400), meusLivros2);
++        adicionaLivro("Duhigg, Charles", new Livro("A nome com a pra criar um desafio", 402), meusLivros2);
++        adicionaLivro("Harari, Yuval Noah", new Livro("21 Lições para o seculo 21", 432), meusLivros2); 
++
++
++
++
++        System.out.println("--- Ordem Alfabetica dos autores ---");
++        Map<String, List<Livro>> meusLivros3 = new TreeMap<>(meusLivros2);
++
++        imprimeLivro(meusLivros3);
++
++    }
++
++    private static void imprimeLivro(Map<String, List<Livro>> meusLivros2){
++        for (Map.Entry<String, List<Livro>> listaLivros : meusLivros2.entrySet()){
++            System.out.println(listaLivros.getKey() );
++            for (Livro livro : listaLivros.getValue()) {
++                System.out.println("\t\t" + livro.getLivro() );
++            }
++        };
++    }
++
++    private static void adicionaLivro(String autor, Livro livro,  Map<String, List<Livro>> mapLivros ) {
++
++        if (mapLivros.containsKey(autor)) {
++            mapLivros.get(autor).add(livro);
++        } else {
++            List<Livro> listaAutor = new ArrayList<>();
++            listaAutor.add(livro);
++            mapLivros.put(autor, listaAutor);
++        }
++
++    }
++}
++
++class Livro {
++    private String livro;
++    private Integer paginas;
++
++    public Livro(String nome, Integer paginas){
++        this.livro = nome;
++        this.paginas = paginas;
++    }
++
++    public String getLivro() {
++        return livro;
++    }
++
++    public void setLivro(String livro) {
++        this.livro = livro;
++    }
++
++    public Integer getPaginas() {
++        return paginas;
++    }
++
++    public void setPaginas(Integer paginas) {
++        this.paginas = paginas;
++    }
++
++    @Override
++    public boolean equals(Object obj) {
++        return super.equals(obj);
++    }
++
++    @Override
++    public int hashCode() {
++        return super.hashCode();
++    }
++
++    @Override
++    public String toString() {
++        return super.toString();
++}
++}
+\ No newline at end of file
